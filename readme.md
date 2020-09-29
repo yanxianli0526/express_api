@@ -20,3 +20,6 @@ mysql:
 
 預防xss:  
 11.npm install xss  
+
+雜湊:
+12.npm install crypto

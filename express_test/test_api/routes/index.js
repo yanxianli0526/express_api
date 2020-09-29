@@ -1,4 +1,5 @@
 var xss = require('xss');
+var crypto = require('crypto');
 
 const { json } = require('body-parser');
 var express = require('express');
@@ -11,8 +12,15 @@ router.get('/', function (req, res, next) {
 
 
 router.get('/v', function (req, res, next) {
-  res.send('This is localhost:3000/v')
+  var userPwd = 'sdasd';
+  var end_paw = md5.update(userPwd).digest('hex');//加密後的密碼
+  console.log(md5)
+  console.log(end_paw)
+
+  res.send('This is localhost:3000/v' + end_paw)
 });
+
+
 
 // get http://127.0.0.1:3000/v2
 router.get('/v2', function (req, res, next) {
@@ -70,6 +78,28 @@ router.get('/v5', function (req, res, next) {
   res.send('test_xss')
 });
 
+
+router.get('/crypto', function (req, res, next) {
+  var userPwd = 'test';
+  var md5 = crypto.createHash('sha256');   //crypto模組功能是加密並生成各種雜湊,此處所示為MD5方式加密
+
+  var end_paw = md5.update(userPwd).digest('hex');//加密後的密碼
+
+
+  var text = "123|12312312123123121231231212312312123123121231231212312312";
+  var hasher = crypto.createHash("md5");
+  hasher.update(text);
+  var hashmsg = hasher.digest('hex');//hashmsg為加密之後的資料
+
+  console.log(hashmsg)
+
+  let hmac = crypto.createHmac('md5', '123456');
+let ret = hmac.update('hello').digest('hex');
+
+console.log(ret);
+
+  res.send('This is localhost:3000/v' + end_paw)
+});
 
 // get http://localhost:3000/get_test/123?qt=5
 router.get('/get_test/:id', function (req, res, next) {
