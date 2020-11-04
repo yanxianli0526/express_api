@@ -94,9 +94,9 @@ router.get('/crypto', function (req, res, next) {
   console.log(hashmsg)
 
   let hmac = crypto.createHmac('md5', '123456');
-let ret = hmac.update('hello').digest('hex');
+  let ret = hmac.update('hello').digest('hex');
 
-console.log(ret);
+  console.log(ret);
 
   res.send('This is localhost:3000/v' + end_paw)
 });
